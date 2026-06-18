@@ -1,0 +1,60 @@
+machines:
+  web01:
+    thresholds:
+      ram: 90
+      disk: 85
+      cpu: 95
+      error_count: 50      # NEW — journalctl error-priority lines since
+                            # last check; same consecutive-breach logic
+                            # as ram/disk/cpu
+      warning_count: 200   # NEW — journalctl warning+error lines since
+                            # last check
+    package_checks:        # unchanged — systemd services, immediate alert
+      - nginx
+      - postgresql
+    apps:                  # NEW — per-app metrics via pgrep pattern match
+      - name: api-worker
+        pattern: "node.*api-server"
+      - name: redis-cache
+        pattern: "redis-server"
+    packages:               # NEW — OS package install/version tracking
+      - nginx
+      - openssl
+      - docker-ce
+    network_checks:          # NEW — external ping/DNS checks
+      - target: "8.8.8.8"
+        type: ping
+      - target: "example.com"
+        type: dns
+    top_n: 5                 # NEW — optional, defaults to 5 if omitted
+
+  db01:
+    thresholds:
+      ram: 90
+      disk: 85
+      cpu: 95
+      error_count: 50      # NEW — journalctl error-priority lines since
+                            # last check; same consecutive-breach logic
+                            # as ram/disk/cpu
+      warning_count: 200   # NEW — journalctl warning+error lines since
+                            # last check
+    package_checks:        # unchanged — systemd services, immediate alert
+      - nginx
+      - postgresql
+    apps:                  # NEW — per-app metrics via pgrep pattern match
+      - name: api-worker
+        pattern: "node.*api-server"
+      - name: redis-cache
+        pattern: "redis-server"
+    packages:               # NEW — OS package install/version tracking
+      - nginx
+      - openssl
+      - docker-ce
+    network_checks:          # NEW — external ping/DNS checks
+      - target: "8.8.8.8"
+        type: ping
+      - target: "example.com"
+        type: dns
+    top_n: 5
+settings:
+  consecutive_threshold_breaches: 2

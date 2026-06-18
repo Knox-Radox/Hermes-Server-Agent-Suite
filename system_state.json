@@ -1,0 +1,41 @@
+{
+    "web01": {
+      "breach_counters": {
+        "ram": 0,
+        "disk": 0,
+        "cpu": 1
+      },
+      "last_stats": {
+        "ram_pct": 26.1,
+        "disk_pct": 9.0,
+        "cpu_pct": 100.0,
+        "uptime": "up 5 hours, 7 minutes"
+      },
+      "last_service_status": {
+        "nginx": "unknown",
+        "redis": "unknown"
+      },
+      "last_checked": "2026-06-17T19:51:50Z",
+      "install_state": "NORMAL",
+      "last_log_check_ts": "2026-06-17T19:51:50Z"
+    },
+    "db01": {
+      "breach_counters": {
+        "ram": 0,
+        "disk": 0,
+        "cpu": 0
+      },
+      "last_stats": {
+        "ram_pct": 26.1,
+        "disk_pct": 9.0,
+        "cpu_pct": 100.0,
+        "uptime": "up 5 hours, 7 minutes"
+      },
+      "last_service_status": {
+        "postgresql": "unknown"
+      },
+      "last_checked": "2026-06-17T19:51:51Z",
+      "install_state": "NORMAL",
+      "last_log_check_ts": "2026-06-17T19:51:51Z"
+    }
+  }

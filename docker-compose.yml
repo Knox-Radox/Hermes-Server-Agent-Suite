@@ -1,0 +1,52 @@
+services:
+  p1-postgres:
+    image: postgres:16-alpine
+    container_name: p1-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: p1monitor
+      POSTGRES_PASSWORD: ${P1_DB_PASSWORD:-changeme_set_in_env_file}
+      POSTGRES_DB: p1_monitoring
+    ports:
+      - "127.0.0.1:5432:5432"   # bound to localhost only; remove the 127.0.0.1: prefix if the agent runs in another container on this same docker network instead
+    volumes:
+      - p1_pgdata:/var/lib/postgresql/data
+      - ./schema_updated.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U p1monitor -d p1_monitoring"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Optional: lightweight DB browser, useful while building the dashboard.
+  # Remove this service once you have a real dashboard or don't want the
+  # extra exposed UI.
+  adminer:
+    image: adminer:4
+    container_name: p1-adminer
+    environment:
+      # Pre-fills the PostgreSQL host field
+      ADMINER_DEFAULT_SERVER: p1-postgres
+    depends_on:
+      p1-postgres:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8085:8080"
+    restart: unless-stopped
+
+  gcp-primary:
+    build: .
+    container_name: gcp-primary
+    ports:
+      - "2222:22"
+    restart: unless-stopped
+
+  gcp-secondary:
+    build: .
+    container_name: gcp-secondary
+    ports:
+      - "2223:22"
+    restart: unless-stopped
+
+volumes:
+  p1_pgdata:

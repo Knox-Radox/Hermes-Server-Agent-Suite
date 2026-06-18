@@ -1,0 +1,22 @@
+# package_targets.yaml
+#
+# Maps a package name (as it appears / is inferred from the install document
+# filename or its content) to the list of target machine aliases that should
+# receive it. Machine aliases here MUST match the keys used in
+# monitor_config.yaml and the ssh_targets.yaml file, so P1/P3 can resolve
+# them to host/port/user.
+#
+# P0 reads this file, and for each generated installation plan attaches the
+# "targets" list based on a lookup of the package name. If a package is not
+# listed here, P0 defaults to an empty target list and flags the plan as
+# "targets_unresolved": true so P3 will skip it and surface a warning instead
+# of guessing.
+
+packages:
+  nginx:
+    - web01
+  redis:
+    - web01
+  postgres:
+    - db01
+  # Add new package -> [machine_alias, machine_alias, ...] entries above.

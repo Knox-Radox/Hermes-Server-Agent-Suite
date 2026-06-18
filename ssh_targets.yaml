@@ -1,0 +1,26 @@
+# ssh_targets.yaml
+#
+# Connection details for every remote target machine, keyed by the same
+# machine alias used in package_targets.yaml and monitor_config.yaml.
+#
+# P1 and P3 both resolve aliases through this file before opening any SSH
+# connection. Keeping it separate from monitor_config.yaml means adding a
+# brand-new machine only requires an entry here + one in monitor_config.yaml,
+# without touching package_targets.yaml unless that machine should also
+# receive package installs.
+
+machines:
+  web01:
+    host: localhost
+    port: 2222
+    user: patchuser
+    ssh_key: ~/.ssh/hermes_patch_test
+
+  db01:
+    host: localhost
+    port: 2223
+    user: patchuser
+    ssh_key: ~/.ssh/hermes_patch_test
+
+  # Add new machines here. "host" may be a real hostname/IP once these are
+  # no longer local test containers on forwarded ports.
