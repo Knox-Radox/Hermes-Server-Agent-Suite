@@ -3,7 +3,7 @@
 ## Architecture summary
 
 Three separate Hermes cron jobs (4 total, since P1 splits into two)
-running under ONE Hermes gateway, ONE Gemma 3 1B model, in this working
+running under ONE Hermes gateway, ONE Gemma 4 31B model, in this working
 directory. Each cron-fired agent run has access to exactly three tools
 (`terminal`, `file`/`read_file`/`write_file`, `delegate_task`) and is a
 fresh, stateless session. ALL state lives in files in this directory.
